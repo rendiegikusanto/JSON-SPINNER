@@ -1,22 +1,5 @@
 package com.rendi.tutorial.lbs_mode;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import org.osmdroid.DefaultResourceProxyImpl;
-import org.osmdroid.ResourceProxy;
-import org.osmdroid.api.IMapController;
-import org.osmdroid.util.GeoPoint;
-import org.osmdroid.views.MapController;
-import org.osmdroid.views.MapView;
-import org.osmdroid.views.overlay.ItemizedIconOverlay;
-import org.osmdroid.views.overlay.OverlayItem;
-import org.osmdroid.views.overlay.ScaleBarOverlay;
-
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -25,8 +8,22 @@ import android.graphics.Point;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
+import android.widget.EditText;
+
+import org.osmdroid.DefaultResourceProxyImpl;
+import org.osmdroid.ResourceProxy;
+import org.osmdroid.api.IMapController;
+import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.ItemizedIconOverlay;
+import org.osmdroid.views.overlay.OverlayItem;
+import org.osmdroid.views.overlay.ScaleBarOverlay;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
     private IMapController myMapController;
 
     LocationManager locationManager;
+    EditText txt_data;
+    EditText txt_data2;
 
 
     @Override
@@ -45,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
         myOpenMapView.setBuiltInZoomControls(true);
         myMapController = myOpenMapView.getController();
         myMapController.setZoom(12);
+
+        txt_data= (EditText) findViewById(R.id.editText);
+        txt_data2 =(EditText)findViewById(R.id.editText2);
 
 
         //--- Create Overlay
@@ -100,7 +102,8 @@ try {
     private void updateLoc(Location loc){
         GeoPoint locGeoPoint = new GeoPoint(loc.getLatitude(), loc.getLongitude());
         myMapController.setCenter(locGeoPoint);
-
+        txt_data.setText(Double.toString(loc.getLatitude()));
+        txt_data2.setText(Double.toString(loc.getLongitude()));
         setOverlayLoc(loc);
 
         myOpenMapView.invalidate();
